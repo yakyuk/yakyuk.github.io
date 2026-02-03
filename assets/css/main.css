@@ -1,0 +1,472 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@utility prose-2xl {
+  max-width: 80ch !important;
+  font-size: 110%;
+}
+
+/* Prevent layout shifts during image loading */
+img {
+  /* Ensure images maintain their aspect ratio during loading */
+  height: auto;
+  max-width: 100%;
+  /* Prevent layout shifts by ensuring dimensions are respected */
+  display: block;
+}
+
+/* Optimize image loading performance */
+img[loading="lazy"] {
+  /* Use content-visibility for better performance where supported */
+  content-visibility: auto;
+  /* Fallback for browsers that don't support content-visibility */
+  contain: layout style paint;
+}
+
+/* Hero container and image optimizations */
+.hero-container {
+  /* Reserve space immediately to prevent layout shifts */
+  width: 100%;
+  max-width: 576px;
+  /* Fixed aspect ratio to prevent any shifts */
+  aspect-ratio: 1 / 1;
+  /* Ensure proper containment */
+  contain: layout style;
+  /* Prevent any overflow issues */
+  overflow: hidden;
+}
+
+.hero-image {
+  /* Responsive width that respects container constraints */
+  width: 100%;
+  height: auto;
+  max-width: 576px;
+  /* Fixed aspect ratio */
+  aspect-ratio: 1 / 1;
+  /* Prevent any layout shifts during loading */
+  contain: layout style paint;
+  /* Ensure image fits within container */
+  object-fit: cover;
+  /* Prevent any size changes */
+  flex-shrink: 0;
+}
+
+/* Specific aspect ratio containers for common image sizes */
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+@theme {
+  /* Content paths for Hugo */
+  --content: "layouts/**/*.html", "content/**/*.md", "assets/**/*.js";
+
+  /* Efficient safelist using Tailwind patterns for development */
+  --safelist: 
+    /* Layout & Spacing patterns */
+    "container", "mx-auto", "p-*", "px-*", "py-*", "pt-*", "pb-*", "pl-*",
+    "pr-*", "m-*", "mx-*", "my-*", "mt-*", "mb-*", "ml-*", "mr-*", "space-x-*",
+    "space-y-*", /* Flexbox & Grid patterns */ "flex", "flex-*", "items-*",
+    "justify-*", "content-*", "grid", "grid-cols-*", "col-span-*", "row-span-*",
+    "gap-*", "gap-x-*", "gap-y-*", /* Sizing patterns */ "w-*", "h-*",
+    "max-w-*", "max-h-*", "min-w-*", "min-h-*", /* Color patterns */ "bg-*",
+    "text-*", "border-*", "ring-*", "divide-*",
+    /* Typography patterns */ "text-*", "font-*", "leading-*", "tracking-*",
+    /* Border & Radius patterns */ "border", "border-*", "rounded", "rounded-*",
+    /* Shadow patterns */ "shadow", "shadow-*", /* Display & Layout */ "block",
+    "inline-block", "inline", "flex", "inline-flex", "grid", "inline-grid",
+    "hidden", "overflow-*", "object-*", /* Position patterns */ "static",
+    "fixed", "absolute", "relative", "sticky", "inset-*", "top-*", "right-*",
+    "bottom-*", "left-*", "z-*", /* Responsive patterns */ "sm:*", "md:*",
+    "lg:*", "xl:*", "2xl:*", /* State patterns */ "hover:*", "focus:*",
+    "active:*", "disabled:*", "visited:*", "dark:*", "group-hover:*",
+    "group-focus:*", /* Form & Interaction patterns */ "placeholder:*",
+    "focus-within:*", "focus-visible:*",
+    /* Animation & Transition patterns */ "transition", "transition-*",
+    "duration-*", "delay-*", "ease-*", "animate-*", "transform", "transform-*",
+    /* Custom classes */ "prose-2xl";
+
+  /* Primary Colors - Gold with OKLCH */
+  --color-primary: oklch(75% 0.15 85);
+  --color-primary-50: oklch(97% 0.02 95);
+  --color-primary-100: oklch(94% 0.04 95);
+  --color-primary-200: oklch(89% 0.08 92);
+  --color-primary-300: oklch(83% 0.12 88);
+  --color-primary-400: oklch(78% 0.14 86);
+  --color-primary-500: oklch(75% 0.15 85); /* Main Gold */
+  --color-primary-600: oklch(65% 0.14 83);
+  --color-primary-700: oklch(55% 0.12 80);
+  --color-primary-800: oklch(45% 0.1 78);
+  --color-primary-900: oklch(35% 0.08 75);
+  --color-primary-950: oklch(25% 0.06 70);
+
+  /* Secondary Colors - Antique Gold with OKLCH */
+  --color-secondary: oklch(60% 0.11 95);
+  --color-secondary-50: oklch(96% 0.015 100);
+  --color-secondary-100: oklch(92% 0.03 100);
+  --color-secondary-200: oklch(86% 0.05 98);
+  --color-secondary-300: oklch(78% 0.08 97);
+  --color-secondary-400: oklch(68% 0.1 96);
+  --color-secondary-500: oklch(60% 0.11 95);
+  --color-secondary-600: oklch(52% 0.1 92);
+  --color-secondary-700: oklch(45% 0.09 88);
+  --color-secondary-800: oklch(38% 0.07 85);
+  --color-secondary-900: oklch(32% 0.06 82);
+  --color-secondary-950: oklch(22% 0.04 80);
+
+  /* Neutral Colors - Neutral with OKLCH */
+  --color-neutral: oklch(55.6% 0 0);
+  --color-neutral-50: oklch(98.5% 0 0);
+  --color-neutral-100: oklch(97% 0 0);
+  --color-neutral-200: oklch(92.2% 0 0);
+  --color-neutral-300: oklch(87% 0 0);
+  --color-neutral-400: oklch(70.8% 0 0);
+  --color-neutral-500: oklch(55.6% 0 0);
+  --color-neutral-600: oklch(43.9% 0 0);
+  --color-neutral-700: oklch(37.1% 0 0);
+  --color-neutral-800: oklch(26.9% 0 0);
+  --color-neutral-900: oklch(20.5% 0 0);
+  --color-neutral-950: oklch(14.5% 0 0);
+
+  /* Gray color scale with OKLCH */
+  --color-gray-50: oklch(98.5% 0.002 247.839);
+  --color-gray-100: oklch(96.7% 0.003 264.542);
+  --color-gray-200: oklch(92.8% 0.006 264.531);
+  --color-gray-300: oklch(87.2% 0.01 258.338);
+  --color-gray-400: oklch(70.7% 0.022 261.325);
+  --color-gray-500: oklch(55.1% 0.027 264.364);
+  --color-gray-600: oklch(44.6% 0.03 256.802);
+  --color-gray-700: oklch(37.3% 0.034 259.733);
+  --color-gray-800: oklch(27.8% 0.033 256.848);
+  --color-gray-900: oklch(21% 0.034 264.665);
+  --color-gray-950: oklch(13% 0.028 261.692);
+
+  /* Zinc color scale with OKLCH */
+  --color-zinc-50: oklch(98.5% 0 0);
+  --color-zinc-100: oklch(96.7% 0.001 286.375);
+  --color-zinc-200: oklch(92% 0.004 286.32);
+  --color-zinc-300: oklch(87.1% 0.006 286.286);
+  --color-zinc-400: oklch(70.5% 0.015 286.067);
+  --color-zinc-500: oklch(55.2% 0.016 285.938);
+  --color-zinc-600: oklch(44.2% 0.017 285.786);
+  --color-zinc-700: oklch(37% 0.013 285.805);
+  --color-zinc-800: oklch(27.4% 0.006 286.033);
+  --color-zinc-900: oklch(21% 0.006 285.885);
+  --color-zinc-950: oklch(14.1% 0.005 285.823);
+
+  /* Indigo color scale with OKLCH */
+  --color-indigo-50: oklch(96.2% 0.018 272.314);
+  --color-indigo-100: oklch(93% 0.034 272.788);
+  --color-indigo-200: oklch(87% 0.065 274.039);
+  --color-indigo-300: oklch(78.5% 0.115 274.713);
+  --color-indigo-400: oklch(67.3% 0.182 276.935);
+  --color-indigo-500: oklch(58.5% 0.233 277.117);
+  --color-indigo-600: oklch(51.1% 0.262 276.966);
+  --color-indigo-700: oklch(45.7% 0.24 277.023);
+  --color-indigo-800: oklch(39.8% 0.195 277.366);
+  --color-indigo-900: oklch(35.9% 0.144 278.697);
+  --color-indigo-950: oklch(25.7% 0.09 281.288);
+
+  /* gold color scale with OKLCH (alias for primary) */
+  --color-gold: oklch(75% 0.15 85);
+  --color-gold-50: oklch(97% 0.02 95);
+  --color-gold-100: oklch(94% 0.04 95);
+  --color-gold-200: oklch(89% 0.08 92);
+  --color-gold-300: oklch(83% 0.12 88);
+  --color-gold-400: oklch(78% 0.14 86);
+  --color-gold-500: oklch(75% 0.15 85); /* Main Gold */
+  --color-gold-600: oklch(65% 0.14 83);
+  --color-gold-700: oklch(55% 0.12 80);
+  --color-gold-800: oklch(45% 0.1 78);
+  --color-gold-900: oklch(35% 0.08 75);
+  --color-gold-950: oklch(25% 0.06 70);
+
+  /* White and black */
+  --color-white: #fff;
+  --color-black: #000;
+
+  /* Custom line heights */
+  --line-height-extra-loose: 2.5;
+  --line-height-12: 3rem;
+}
+
+/* Font family configuration */
+:root {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Noto Color Emoji",
+    "Segoe UI Symbol",
+    "Android Emoji",
+    "EmojiSymbols";
+}
+
+/* Custom prose styles for markdown content */
+.prose {
+  max-width: 65ch;
+  color: var(--color-zinc-800);
+}
+
+.prose h1 {
+  color: var(--color-zinc-900);
+  font-weight: 800;
+  font-size: 2.25rem;
+  margin-top: 0;
+  margin-bottom: 0.8888889rem;
+  line-height: 1.1111111;
+}
+
+.prose h2 {
+  color: var(--color-zinc-900);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.3333333;
+}
+
+.prose h3 {
+  color: var(--color-zinc-900);
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-top: 1.6rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: var(--color-zinc-900);
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.625;
+}
+
+.prose p {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.75;
+}
+
+.prose a {
+  color: var(--color-gold-600);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.prose a:hover {
+  color: var(--color-gold-500);
+}
+
+.prose strong {
+  color: var(--color-zinc-900);
+  font-weight: 600;
+}
+
+.prose ul {
+  list-style-type: disc;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1.625rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1.625rem;
+}
+
+.prose li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose blockquote {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--color-zinc-900);
+  border-left-width: 0.25rem;
+  border-left-color: var(--color-zinc-300);
+  quotes: "\201C" "\201D" "\2018" "\2019";
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+  padding-left: 1rem;
+}
+
+.prose code {
+  color: var(--color-gold-600);
+  font-weight: 600;
+  font-size: 0.875rem;
+  background-color: var(--color-zinc-100);
+  padding: 0.25rem 0.375rem;
+  border-radius: 0.375rem;
+}
+
+.prose pre {
+  color: var(--color-zinc-100);
+  background-color: var(--color-zinc-900);
+  overflow-x: auto;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.7142857;
+  margin-top: 1.7142857rem;
+  margin-bottom: 1.7142857rem;
+  border-radius: 0.375rem;
+  padding: 0.8571429rem 1.1428571rem;
+}
+
+.prose pre code {
+  background-color: transparent;
+  border-width: 0;
+  border-radius: 0;
+  padding: 0;
+  font-weight: inherit;
+  color: var(--color-gold-400);
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+.prose table {
+  width: 100%;
+  table-layout: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+  line-height: 1.7142857;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.prose thead {
+  border-bottom: 1px solid var(--color-zinc-300);
+}
+
+.prose thead th {
+  color: var(--color-zinc-900);
+  font-weight: 600;
+  vertical-align: bottom;
+  padding-right: 0.5714286rem;
+  padding-bottom: 0.5714286rem;
+  padding-left: 0.5714286rem;
+  text-align: left;
+}
+
+.prose tbody tr {
+  border-bottom: 1px solid var(--color-zinc-200);
+}
+
+.prose tbody tr:last-child {
+  border-bottom-width: 0;
+}
+
+.prose tbody td {
+  vertical-align: baseline;
+  padding: 0.5714286rem;
+}
+
+.prose tbody td p {
+  margin: 0;
+}
+
+/* Dark mode prose styles */
+.dark .prose {
+  color: var(--color-zinc-200);
+}
+
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4,
+.dark .prose h5,
+.dark .prose h6 {
+  color: var(--color-white);
+}
+
+.dark .prose strong {
+  color: var(--color-white);
+}
+
+.dark .prose a {
+  color: var(--color-gold-400);
+}
+
+.dark .prose a:hover {
+  color: var(--color-gold-300);
+}
+
+.dark .prose blockquote {
+  color: var(--color-zinc-100);
+  border-left-color: var(--color-zinc-700);
+}
+
+.dark .prose code {
+  color: var(--color-gold-400);
+  background-color: var(--color-zinc-800);
+}
+
+.dark .prose pre {
+  color: var(--color-zinc-200);
+  background-color: var(--color-zinc-900);
+}
+
+.dark .prose pre code {
+  color: var(--color-gold-300);
+}
+
+.dark .prose thead {
+  border-bottom-color: var(--color-zinc-600);
+}
+
+.dark .prose thead th {
+  color: var(--color-white);
+}
+
+.dark .prose tbody tr {
+  border-bottom-color: var(--color-zinc-700);
+}
+
+/* Dark mode placeholder text fix */
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--color-gray-300);
+  opacity: 1;
+}
+
+#cta-email .dark input::placeholder,
+#cta-email .dark textarea::placeholder {
+  color: var(--color-gray-400);
+  opacity: 1;
+}
+
+/* Light mode placeholder text */
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-gray-500);
+  opacity: 1;
+}
+
+/* CTA email placeholder - light mode */
+#cta-email::placeholder {
+  color: var(--color-gray-400);
+  opacity: 1;
+}
+
+/* Custom CSS end */

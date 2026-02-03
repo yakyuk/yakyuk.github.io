@@ -1,0 +1,249 @@
+<div
+  class="top-0 z-50 w-full text-gray-200 bg-gray-200 border-2 border-gray-900 bg-gray-950 md:sticky border-b-stone-200/10"
+>
+  <div
+    x-data="{ open: false }"
+    class="flex flex-col px-4 mx-auto max-w-full md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"
+  >
+    <div class="flex flex-row justify-between items-center p-4">
+      <a
+        href="/"
+        class="flex text-gray-100 transition duration-1000 ease-in-out group"
+      >
+        <img
+          src="/images/site-logo.svg"
+          width="36"
+          height="36"
+          class="w-9 h-9 transition-opacity group-hover:opacity-50 group-focus:opacity-70"
+          alt="{{ .Site.Title }} Logo"
+          style="width: 36px; height: 36px"
+        />
+        <div
+          class="mt-1 ml-3 text-xl font-black tracking-tight text-gray-100 uppercase transition-colors group-hover:text-gray-400/60"
+        >
+          {{ .Site.Title }}
+        </div>
+      </a>
+      <button
+        class="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
+        @click="open = !open"
+        role="button"
+        :aria-expanded="open"
+        aria-label="Toggle navigation menu"
+        aria-controls="menuItems"
+      >
+        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+          <path
+            x-show="!open"
+            fill-rule="evenodd"
+            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
+            clip-rule="evenodd"
+          ></path>
+          <path
+            x-show="open"
+            fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <nav
+      id="menuItems"
+      x-cloak
+      :class="{'flex': open, 'hidden': !open}"
+      class="hidden flex-col flex-grow pb-4 md:pb-0 md:flex md:justify-end md:flex-row"
+    >
+      {{ range site.Menus.main }} {{ if (eq "complexdropdown" .Pre) }}
+      <div @click.away="open = false" class="relative" x-data="{ open: false }">
+        <button
+          @click="open = !open"
+          class="flex flex-row items-center px-4 py-2 mt-2 w-full text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:w-auto md:inline md:mt-0 md:ml-4 hover:text-white focus:text-white hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:shadow-outline"
+        >
+          <span>{{ .Name }}</span>
+          <svg
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            :class="{'rotate-180': open, 'rotate-0': !open}"
+            class="inline mt-1 ml-1 w-4 h-4 transition-transform duration-200 transform md:-mt-1"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+        <div
+          x-show="open"
+          x-transition:enter="transition ease-out duration-100"
+          x-transition:enter-start="transform opacity-0 scale-95"
+          x-transition:enter-end="transform opacity-100 scale-100"
+          x-transition:leave="transition ease-in duration-75"
+          x-transition:leave-start="transform opacity-100 scale-100"
+          x-transition:leave-end="transform opacity-0 scale-95"
+          class="absolute right-0 z-30 mt-2 w-full origin-top-right md:max-w-sm md:w-screen"
+        >
+          <div
+            class="px-2 pt-2 pb-4 bg-white rounded-md shadow-lg text-zinc-900"
+          >
+            <div class="grid grid-cols-1 gap-4">
+              {{ range (index site.Menus .Identifier) }}
+              <a
+                class="flex items-start p-2 bg-transparent rounded-lg group row hover:text-white focus:text-white hover:bg-primary-600 focus:bg-primary-700 focus:outline-none focus:shadow-outline"
+                href="{{ .URL | absLangURL }}"
+              >
+                <div
+                  class="p-3 text-white rounded-lg bg-primary-600 group-hover:bg-gray-900"
+                >
+                  {{ if (eq .Pre "construction") }}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M756-120 537-339l84-84 219 219-84 84Zm-552 0-84-84 276-276-68-68-28 28-51-51v82l-28 28-121-121 28-28h82l-50-50 142-142q20-20 43-29t47-9q24 0 47 9t43 29l-92 92 50 50-28 28 68 68 90-90q-4-11-6.5-23t-2.5-24q0-59 40.5-99.5T701-841q15 0 28.5 3t27.5 9l-99 99 72 72 99-99q7 14 9.5 27.5T841-701q0 59-40.5 99.5T701-561q-12 0-24-2t-23-7L204-120Z"
+                    />
+                  </svg>
+
+                  {{ else if (eq .Pre "softdev") }}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M240-360h96q19 0 32.5-13.5T382-406v-148q0-19-13.5-32.5T336-600h-96v240Zm46-46v-148h50v148h-50Zm149 46h98v-46h-82v-52h52v-46h-52v-50h82v-46h-98q-13 0-21.5 8.5T405-570v180q0 13 8.5 21.5T435-360Zm206-1q13 0 22.5-8.5T676-391l56-209h-48l-43 164-43-164h-48l56 209q3 13 12.5 21.5T641-361ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"
+                    />
+                  </svg>
+                  {{ else if (eq .Pre "ebook") }}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M440-278v-394q-41-24-87-36t-93-12q-36 0-71.5 7T120-692v396q35-12 69.5-18t70.5-6q47 0 91.5 10.5T440-278Zm40 118q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q74 0 126 17t112 52q11 6 16.5 14t5.5 21v418q44-21 88.5-31.5T700-320q36 0 70.5 6t69.5 18v-481q15 5 29.5 11t28.5 14q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59Zm140-240v-440l120-40v440l-120 40Zm-340-99Z"
+                    />
+                  </svg>
+                  {{ else }}
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    class="w-4 h-4 md:h-6 md:w-6"
+                  >
+                    <path
+                      d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+                    ></path>
+                    <path
+                      d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
+                    ></path>
+                  </svg>
+                  {{ end }}
+                </div>
+                <div class="ml-3">
+                  <p class="font-semibold">{{ .Name }}</p>
+                  <p class="text-sm">{{ .Post }}</p>
+                </div>
+              </a>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{ else if (eq "dropdown" .Pre) }}
+      <div @click.away="open = false" class="relative" x-data="{ open: false }">
+        <button
+          @click="open = !open"
+          class="flex flex-row items-center px-4 py-2 mt-2 w-full text-sm font-semibold text-left bg-transparent rounded-lg md:w-auto md:inline md:mt-0 md:ml-4 hover:text-white focus:text-white hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:shadow-outline"
+        >
+          <span>{{ .Name }}</span>
+          <svg
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            :class="{'rotate-180': open, 'rotate-0': !open}"
+            class="inline mt-1 ml-1 w-4 h-4 transition-transform duration-200 transform md:-mt-1"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+        <div
+          x-show="open"
+          x-transition:enter="transition ease-out duration-100"
+          x-transition:enter-start="transform opacity-0 scale-95"
+          x-transition:enter-end="transform opacity-100 scale-100"
+          x-transition:leave="transition ease-in duration-75"
+          x-transition:leave-start="transform opacity-100 scale-100"
+          x-transition:leave-end="transform opacity-0 scale-95"
+          class="absolute right-0 z-30 mt-2 w-full rounded-md shadow-lg origin-top-right md:w-48"
+        >
+          <div class="px-2 py-2 bg-white rounded-md shadow text-primary-900">
+            {{ range (index site.Menus .Identifier) }}
+            <a
+              class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-white focus:text-white hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:shadow-outline"
+              href="{{ .URL | absLangURL }}"
+              >{{- .Name -}}</a
+            >
+            {{ end }}
+          </div>
+        </div>
+      </div>
+      {{ else }}
+      <a
+        class="px-4 py-2 mt-2 text-sm font-semibold rounded-lg md:mt-0 md:ml-4 hover:text-white focus:text-white hover:bg-primary-600 focus:bg-primary-700 focus:outline-none focus:shadow-outline"
+        href="{{ .URL | absLangURL }}"
+        title="{{ .Title | default .Name }}"
+      >
+        {{ .Name }}
+      </a>
+      {{ end }} {{ end }} {{ if not .Site.Params.Disable_theme_toggle }}
+      <button
+        id="theme-toggle"
+        type="button"
+        class="p-2 text-sm text-gray-500 rounded-lg md: dark:text-gray-400 md:hover:bg-gray-100 dark:md:hover:bg-gray-700 md:focus:outline-none md:focus:ring-4 md:focus:ring-gray-200 dark:md:focus:ring-gray-700 md:ml-2 xs:hidden"
+      >
+        <svg
+          id="theme-toggle-dark-icon"
+          class="hidden w-5 h-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+          ></path>
+        </svg>
+        <svg
+          id="theme-toggle-light-icon"
+          class="hidden w-5 h-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          aria-label="Dark or Light Mode"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+      {{ end }}
+    </nav>
+  </div>
+</div>
